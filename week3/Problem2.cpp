@@ -2,57 +2,50 @@
 Name : Shourya Srivastava 
 University Roll NO : 2017377
 Section : CE
-Problem Statement :  Given a sorted array of positive integers design an algorithm and implement it using a program to find three indices i, j , k such that arr[i] + arr[j] = arr[k]
-
-/* Algorithm
-1. Using two pointer approach, define a target and find pair which sum up to the target
-2. Traverse from last index to 0th index
-3. Define target as arr[current index] and  search pair in range [0 - (current index -1 )]
+Problem Statement :  Given an unsorted array of integers, design an algorithm and implement a program to sort this
+array using selection sort. Your program should also find number of comparisons and number of
+swaps required.
 */
-
 #include<iostream>
 #include<vector>
 using namespace std;
 
-// function to find pair which sum up to target
-bool twoSum(vector<int>&nums, int i){
-    int target = nums[i];
+ int comparison=0;
+ int shift=0;
 
-    // using two pointer approach since array is sorted
-    int a = 0, b = i-1;
-    while(a<=b){
-        if(nums[a]+nums[b]==nums[i]){
-            cout<<a<<" "<<b<<" "<<i<<endl;
-            return true;
+void selectionSort(vector<int>&nums){
+    comparison = 0;
+    shift = 0;
+     int minIdx;
+    for(int i =0;i<nums.size()-1; i++){
+        minIdx = i;
+        for(int j=i+1;j<nums.size(); j++){
+            comparison++;
+            if(nums[minIdx]>nums[j]){
+                swap(nums[minIdx], nums[j]);
+                shift++;
+            }
         }
-        else if(nums[a]+nums[b]>nums[i]) b--;
-        else a++;
     }
-    return false;
-}
-
-// find the triplet
-void findTriplet(vector<int>&nums){
-    int i;
-    int n = nums.size();
-    for(i = n-1; i>=0; i--){
-        if(twoSum(nums,i)) return;
-    }
-    cout<<"No sequence found"<<endl;
 }
 
 int main(){
     int n;
-    cout<<"Enter the number of test cases : ";
+    cout<<"Enter the number of testcase : ";
     cin>>n;
     while(n--){
-        int s;
-        cout<<"Enter the size of array : ";
-        cin>>s;
-        vector<int> arr(s);
-        for(int i=0; i<s; i++){
-            cin>>arr[i];
-        }
-       findTriplet(arr);
+    int size; 
+    cout<<"Enter the size of the array : ";
+    cin>>size;
+    vector<int> arr(size);
+    cout<<"Enter the elements : ";
+    for(int i=0; i<size; i++){
+        cin>>arr[i];
+    }
+    selectionSort(arr);
+    for(auto i: arr) cout<<i<<" ";
+    cout<<"\n";
+    cout<<"Comparison : "<<comparison<<endl;
+    cout<<"Shifts : "<<shift<<endl;
     }
 }

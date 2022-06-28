@@ -2,47 +2,57 @@
 Name : Shourya Srivastava 
 University Roll NO : 2017377
 Section : CE
-Problem Statement :  WAP to implement insertion sort and also find total number of comparison.
+Problem Statement :  Given a sorted array of positive integers design an algorithm and implement it using a program to find three indices i, j , k such that arr[i] + arr[j] = arr[k]
+
+/* Algorithm
+1. Using two pointer approach, define a target and find pair which sum up to the target
+2. Traverse from last index to 0th index
+3. Define target as arr[current index] and  search pair in range [0 - (current index -1 )]
 */
+
 #include<iostream>
 #include<vector>
 using namespace std;
 
-void display(vector<int>&nums){
-     for(auto i:nums) cout<<i<<" ";
-        cout<<"\n";
+// function to find pair which sum up to target
+bool twoSum(vector<int>&nums, int i){
+    int target = nums[i];
+
+    // using two pointer approach since array is sorted
+    int a = 0, b = i-1;
+    while(a<=b){
+        if(nums[a]+nums[b]==nums[i]){
+            cout<<a<<" "<<b<<" "<<i<<endl;
+            return true;
+        }
+        else if(nums[a]+nums[b]>nums[i]) b--;
+        else a++;
+    }
+    return false;
 }
 
-int insertionSort(vector<int>&nums){
-    int temp, j;
-    // to count number of comparsion
-    int cmp=0;
-    for(int i=1; i<nums.size(); i++){
-        temp = nums[i];
-        j = i-1;
-        // find the suitable position of temp in sorted part of list
-        while(j>=0 && nums[j]>temp){
-            if(nums[j]>temp){
-                nums[j+1] = nums[j];
-                j--;
-                cmp++;
-            }
-        }
-        nums[j+1] = temp;
-
+// find the triplet
+void findTriplet(vector<int>&nums){
+    int i;
+    int n = nums.size();
+    for(i = n-1; i>=0; i--){
+        if(twoSum(nums,i)) return;
     }
-    return cmp;
+    cout<<"No sequence found"<<endl;
 }
 
 int main(){
-    int n; 
-    cout<<"Enter the size of the array : ";
+    int n;
+    cout<<"Enter the number of test cases : ";
     cin>>n;
-    vector<int> arr(n);
-    cout<<"Enter the elements : ";
-    for(int i=0; i<n; i++){
-        cin>>arr[i];
+    while(n--){
+        int s;
+        cout<<"Enter the size of array : ";
+        cin>>s;
+        vector<int> arr(s);
+        for(int i=0; i<s; i++){
+            cin>>arr[i];
+        }
+       findTriplet(arr);
     }
-    cout<<"No of comparison : "<< insertionSort(arr)<<endl;
-    for(int i:arr) cout<<i<<" ";
 }

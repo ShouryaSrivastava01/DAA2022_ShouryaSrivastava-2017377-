@@ -2,8 +2,8 @@
 Name : Shourya Srivastava 
 University Roll NO : 2017377
 Section : CE
-Problem Statement :  Given an array of non-negative, design a linear algorithm and implement it using a program to find 
-whether key element is present or not and also find total number of comparison.
+Problem Statement :  Given an array of nonnegative integers, design a linear algorithm and implement it using a program to find whether given key element is present in the array or not. Also, find total number
+of comparisons for each input case. (Time Complexity = O(n), where n is the size of input)
 */
 #include <iostream>
 using namespace std;
@@ -25,19 +25,23 @@ int linearSearch(int *arr, int size, int key){
 
 int main()
 {
-    int n, key;
+    int n;
+    cin>>n;
+    while(n--){
+    int size, key;
     cout<<"Enter the size of the array : ";
-    cin>> n;
-    int arr[n];
+    cin>> size;
+    int arr[size];
     cout<<"Enter the elements : ";
-    for(int i=0; i<n ; i++){
+    for(int i=0; i<size ; i++){
         cin>>arr[i];
     }
     cout<<"Enter the key to be searched : ";
     cin>>key;
     
-    if(linearSearch(arr,n,key)==-1) cout<<"Given key not found ";
-    else cout<<"Given key found and Number of comparison to find given key : "<<linearSearch(arr,n,key);
+    if(linearSearch(arr,size,key)==-1) cout<<"Not Present "<<size<<endl;
+    else cout<<"Present "<<linearSearch(arr,size,key)<<endl;
+    }
 
 
     return 0;

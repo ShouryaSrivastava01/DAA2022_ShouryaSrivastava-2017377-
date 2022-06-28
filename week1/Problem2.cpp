@@ -2,51 +2,57 @@
 Name : Shourya Srivastava 
 University Roll NO : 2017377
 Section : CE
-Problem Statement : Given a sorted array of positive number, desing an algorithm and implement it using a program to find whether
-the given key element is present or not and also find total number of comparison.
+Problem Statement : Given an already sorted array of positive integers, design an algorithm and implement it using a
+program to find whether given key element is present in the array or not. Also, find total number
+of comparisons for each input case. (Time Complexity = O(nlogn), where n is the size of input).
 */
 
 #include <iostream>
 using namespace std;
-
+int cmp = 0;
 //given array is sorted, binary search is best suited for searching 
-int binarySearch(int *arr, int size, int key){
-    int left=0, right=size-1, mid=0, cmp=1;
+bool binarySearch(int *arr, int size, int key){
+    int left=0, right=size-1, mid=0;
     while(left<=right){
+        cmp+=1;
         mid=left+(right-left)/2;
         if(arr[mid]==key){
-            return cmp;
+            return true;
         }
         // move left
         else if(arr[mid]>key){
-            right=mid;
+            right=mid-1;
         }
         //move right
         else {
             left=mid+1;
         }
         // increment the comparison
-        cmp++;
     }
-    return -1;
+    return false;
 }
 
 int main()
 {
-    int n, key;
+    int n; 
+    cin>>n;
+    while(n--){
+    int size, key;
     cout<<"Enter the size of the array : ";
-    cin>> n;
-    int arr[n];
+    cin>> size;
+    int arr[size];
     cout<<"Enter the elements in sorted order : ";
-    for(int i=0; i<n ; i++){
+    for(int i=0; i<size ; i++){
         cin>>arr[i];
     }
     cout<<"Enter the key to be searched : ";
     cin>>key;
     
-    if(binarySearch(arr,n,key)==-1) cout<<"Given key not found ";
-    else cout<<"Given key found and Number of comparison to find given key : "<<binarySearch(arr,n,key);
-
+    if(!binarySearch(arr,size,key)) cout<<"Not Present ";
+    else cout<<"Present ";
+    cout<<cmp<<endl;
+    cmp=0;
+    }
 
     return 0;
 }

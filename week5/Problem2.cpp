@@ -2,41 +2,48 @@
 Name : Shourya Srivastava 
 University Roll NO : 2017377
 Section : CE
-Problem Statement :  . Given an unsorted array of positive integers, design an algorithm and implement it using a
-program to find whether there are any duplicate elements in the array or not. (use sorting) (Time
+Problem Statement : Given an unsorted array of integers, design an algorithm and implement it using a program to
+find whether two elements exist such that their sum is equal to the given key element. (Time
 Complexity = O(n log n))
-
 */
-#include<iostream>
-#include<algorithm>
+
+
+#include <iostream>
 #include<vector>
 using namespace std;
+
 
 void mergeSort(vector<int>&nums, int, int);
 void merge(vector<int>&nums, int , int , int);
 
-bool checkDuplicate(vector<int>&nums){
-    mergeSort(nums, 0 , nums.size()-1);
-    for(int i=1;i<nums.size();i++){
-        if(nums[i-1]==nums[i]) return true;
-    }
-    return false;
-}
 
-int main(){
+int main()
+{
     int n;
-    cout<<"Enter the number of testcase : ";
+    cout<<"Enter the number of testcases : ";
     cin>>n;
     while(n--){
-        int size;
-        cout<<"Enter the size of array : ";
-        cin>>size;
-        vector<int> arr(size);
-        for(int i=0; i<size; i++) cin>>arr[i];
-        
-        if(checkDuplicate(arr)) cout<<"YES"<<endl;
-        else cout<<"NO"<<endl;
+    int size, key;
+    cout<<"Enter the size of the array : ";
+    cin>>size; 
+    vector<int> arr(size);
+    for(int i=0; i<size; i++) cin>>arr[i];
+    cin>> key;
+    //sort the array
+    mergeSort(arr, 0, size-1);
+    int p1=0, p2 = size-1;   //two pointer approach
+    while(p1<p2){
+        if(arr[p1]+arr[p2]==key){
+            cout<<arr[p1]<<" "<<arr[p2]<<endl;
+            break;
+        }
+        else if(arr[p1]+arr[p2]>key) p2--;
+        else p1++;
     }
+    if(p1>=p2) cout<<"No Such Element Exits"<<endl;
+
+}
+    return 0;
 }
 
 void merge(vector<int>&a,int lb,int mid,int up ){
@@ -57,7 +64,6 @@ void merge(vector<int>&a,int lb,int mid,int up ){
    while(i<n1) a[k++] = left[i++];
    while(j<n2) a[k++] = right[j++];
 
-   
 }
 
 void mergeSort(vector<int>&a,int lb,int up){

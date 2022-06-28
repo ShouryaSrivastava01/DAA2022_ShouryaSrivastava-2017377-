@@ -2,75 +2,61 @@
 Name : Shourya Srivastava 
 University Roll NO : 2017377
 Section : CE
-Problem Statement :  Given a sorted array of positive integers containing few duplicate elements. Design an algorithm and implement it using a program to find whether the given key element is present int the array or not. If present, then also find the number of copies of given key. (Time complexity : O(logn))
+Problem Statement : Given an unsorted array of integers, design an algorithm and a program to sort the array using
+insertion sort. Your program should be able to find number of comparisons and shifts ( shifts total
+number of times the array elements are shifted from their place) required for sorting the array.
 */
-
-/* Algorithm
-1. Using binary search, find  the first occurrence of the given key
-2. If first is not found then given key is not present
-3. ELSE Using binary search, find the last occurrence of the given key
-4. copies of given key = last occurence - first occurrence + 1 
-*/
-
 #include<iostream>
 #include<vector>
 using namespace std;
 
-void findDuplicate(vector<int>& nums, int target){
-    int left = 0, right = nums.size()-1;
+ int comparison=0;
+ int shift=0;
 
-    int first = -1 , last = -1;
+void display(vector<int>&nums){
+     for(auto i:nums) cout<<i<<" ";
+        cout<<"\n";
+}
 
-    //find the first occurence of the target 
-    while(left<=right){
-        int mid = left+ (right - left)/2;
-        if(nums[mid]==target){
-            first = mid;
-            right = mid -1;
+void insertionSort(vector<int>&nums){
+    comparison=0;
+    shift = 0;
+    int temp, j;
+    for(int i=1; i<nums.size(); i++){
+        temp = nums[i];
+        j = i-1;
+        int cmp = 0;
+        comparison++;
+        // find the suitable position of temp in sorted part of list
+        while(j>=0 && nums[j]>temp){
+                nums[j+1] = nums[j];
+                j--;
+                cmp++;
+                shift++;
         }
-        else if(nums[mid]>target) right  = mid - 1;
-        else  left = mid +1;
-    }
+        nums[j+1] = temp;
+        comparison+=(cmp>0)? cmp-1 : 0;
 
-    // if no first occurrence is found then key is not present
-    if(first == -1){
-        cout<<"KEY NOT Present"<<endl;
-        return;
     }
-    
-    // find the last occurrence
-    left = 0, right = nums.size()-1;
-    while(left<=right){
-        int mid = left+ (right - left)/2;
-        if(nums[mid]==target) {
-            last = mid;
-            left = mid + 1;
-        }
-       else if(nums[mid]>target) right  = mid - 1;
-        else  left = mid +1;
-        
-    }
-    
-    cout<<target<<" - "<<last-first+1<<endl;
 }
 
 int main(){
     int n;
-    cout<<"Enter the number of test cases : ";
+    cout<<"Enter the number of testcase : ";
     cin>>n;
     while(n--){
-        int s;
-        cout<<"Enter the size of array : ";
-        cin>>s;
-        vector<int> arr(s);
-        for(int i=0; i<s; i++){
-            cin>>arr[i];
-        }
-        int target;
-        cout<<"Enter the key to be searched : ";
-        cin>>target;
-
-        findDuplicate(arr, target);
-        
+    int size; 
+    cout<<"Enter the size of the array : ";
+    cin>>size;
+    vector<int> arr(size);
+    cout<<"Enter the elements : ";
+    for(int i=0; i<size; i++){
+        cin>>arr[i];
+    }
+    insertionSort(arr);
+    for(auto i: arr) cout<<i<<" ";
+    cout<<"\n";
+    cout<<"Comparison : "<<comparison<<endl;
+    cout<<"Shifts : "<<shift<<endl;
     }
 }
